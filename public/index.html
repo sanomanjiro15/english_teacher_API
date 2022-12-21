@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>English Teacher</title>
+    <meta charset="utf-8"/>
+</head>
+
+<body>
+<p> Hello from English teacher </p>
+<button onclick="word_guess()"> guess word</button>
+<p></p>
+<div id="english"></div>
+<p></p>
+<div id="variance"></div>
+<p></p>
+<div id="question_id"></div>
+
+<p> Введите правильный вариант ответа: </br>
+    <input name="answer" id="answer">
+</p>
+<button onclick="word_check()"> check answer</button>
+<p></p>
+<div id="result_word"></div>
+
+<button onclick="word_result()"> correct answer</button>
+<p></p>
+<div id="correct_answer_word"></div>
+
+<button onclick="letter_guess()"> guess letter</button>
+<p></p>
+<div id="en_word"></div>
+<p></p>
+<div id="question_id"></div>
+
+<p> Введите правильный ответ: </br>
+    <input name="answer" id="answer">
+</p>
+<button onclick="letter_check()"> check answer</button>
+<p></p>
+<div id="result_letter"></div>
+
+<button onclick="letter_result()"> correct answer</button>
+<p></p>
+<div id="correct_answer_letter"></div>
+
+<script>
+    async function word_guess()
+    {
+        const response = await fetch("word/guess", {
+        method: "GET"
+        })
+
+        if (response.ok)
+            {
+            const data = await response.json()
+            document.getElementById("english").textContent = data.english;
+            document.getElementById("variance").textContent = data.variance;
+            document.getElementById("question_id").textContent = data.question_id;
+            }
+    }
+
+    async function word_check()
+    {
+        const answer = document.getElementById("answer").value;
+        const question_id = document.getElementById("question_id").textContent;
+        console.log(answer)
+        console.log(question_id)
+        const response = await fetch("word/check", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({
+            answer: answer,
+            question_id: Number(question_id)
+            })
+        })
+
+        if (response.ok)
+            {
+            const data = await response.json()
+            document.getElementById("result_word").textContent = data.is_correct
+            }
+    }
+
+    async function word_result()
+    {
+        const response = await fetch("word/result/{question_id}", {
+        method: "GET"
+        })
+
+        if (response.ok)
+            {
+            const data = await response.json()
+            document.getElementById("correct_answer_word").textContent = data.correct_answer;
+            }
+    }
+
+    async function letter_guess()
+    {
+        const response = await fetch("letter/guess", {
+        method: "GET"
+        })
+
+        if (response.ok)
+            {
+            const data = await response.json()
+            document.getElementById("en_word").textContent = data.en_word;
+            document.getElementById("question_id").textContent = data.question_id;
+            }
+    }
+
+    async function letter_check()
+    {
+        const answer = document.getElementById("answer").value;
+        const question_id = document.getElementById("question_id").textContent;
+        console.log(answer)
+        console.log(question_id)
+        const response = await fetch("letter/check", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({
+            answer: answer,
+            question_id: Number(question_id)
+            })
+        })
+
+        if (response.ok)
+            {
+            const data = await response.json()
+            document.getElementById("result_letter").textContent = data.is_correct
+            }
+    }
+
+    async function letter_result()
+    {
+        const response = await fetch("letter/result/{question_id}", {
+        method: "GET"
+        })
+
+        if (response.ok)
+            {
+            const data = await response.json()
+            document.getElementById("correct_answer_letter").textContent = data.correct_answer;
+            }
+    }
+</script>
+
+</body>
+
+</html>
