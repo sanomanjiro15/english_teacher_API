@@ -13,10 +13,10 @@
 <p></p>
 <div id="variance"></div>
 <p></p>
-<div id="question_id"></div>
+<div id="question_id_word"></div>
 
 <p> Введите правильный вариант ответа: </br>
-    <input name="answer" id="answer">
+    <input name="answer" id="answer_word">
 </p>
 <button onclick="word_check()"> check answer</button>
 <p></p>
@@ -30,10 +30,10 @@
 <p></p>
 <div id="en_word"></div>
 <p></p>
-<div id="question_id"></div>
+<div id="question_id_letter"></div>
 
 <p> Введите правильный ответ: </br>
-    <input name="answer" id="answer">
+    <input name="answer" id="answer_letter">
 </p>
 <button onclick="letter_check()"> check answer</button>
 <p></p>
@@ -55,13 +55,13 @@
             const data = await response.json()
             document.getElementById("english").textContent = data.english;
             document.getElementById("variance").textContent = data.variance;
-            document.getElementById("question_id").textContent = data.question_id;
+            document.getElementById("question_id_word").textContent = data.question_id;
             }
     }
 
     async function word_check()
     {
-        const answer = document.getElementById("answer").value;
+        const answer = document.getElementById("answer_word").value;
         const question_id = document.getElementById("question_id").textContent;
         console.log(answer)
         console.log(question_id)
@@ -104,13 +104,13 @@
             {
             const data = await response.json()
             document.getElementById("en_word").textContent = data.en_word;
-            document.getElementById("question_id").textContent = data.question_id;
+            document.getElementById("question_id_letter").textContent = data.question_id;
             }
     }
 
     async function letter_check()
     {
-        const answer = document.getElementById("answer").value;
+        const answer = document.getElementById("answer_letter").value;
         const question_id = document.getElementById("question_id").textContent;
         console.log(answer)
         console.log(question_id)
